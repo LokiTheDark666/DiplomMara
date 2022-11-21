@@ -17,12 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServiceTestCreditPage {
 
-    private TourPage tourPage = new TourPage();
-    private CreditPage creditPage = new CreditPage();
+    private final TourPage tourPage = new TourPage();
+    private final CreditPage creditPage = new CreditPage();
 
     @BeforeAll
     static void setUpAll() {
-        open(System.getProperty("sut.url"));
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 

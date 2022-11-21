@@ -52,53 +52,66 @@ public class CreditPage {
 
     public void emptyFieldNumberCard() {
         numberCardError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        numberCardError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongFormatFieldNumberCard() {
         numberCardError.shouldHave(Condition.exactText("Неверный формат"));
+        numberCardError.waitUntil(Condition.visible,1500);
     }
 
     public void emptyFieldMonth() {
         monthError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        monthError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongFormatFieldMonth() {
         monthError.shouldHave(Condition.exactText("Неверный формат"));
+        monthError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongPeriodMonthField() {
         monthError.shouldHave(Condition.exactText("Неверно указан срок действия карты"));
+        monthError.waitUntil(Condition.visible,1500);
     }
 
     public void emptyFieldYear() {
         yearError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        yearError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongFormatFieldYear() {
         yearError.shouldHave(Condition.exactText("Неверный формат"));
+        yearError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongPeriodYearField() {
         yearError.shouldHave(Condition.exactText("Неверно указан срок действия карты"));
+        yearError.waitUntil(Condition.visible,1500);
     }
 
     public void cardExpiredFieldYear() {
         yearError.shouldHave(Condition.exactText("Истек срок действия карты"));
+        yearError.waitUntil(Condition.visible,1500);
     }
 
     public void emptyFieldOwner() {
         ownerError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        ownerError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongFormatFieldOwner() {
         ownerError.shouldHave(Condition.exactText("Неверный формат"));
+        ownerError.waitUntil(Condition.visible,1500);
     }
 
     public void emptyFieldCvc() {
         cvcError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        cvcError.waitUntil(Condition.visible,1500);
     }
 
     public void wrongFormatFieldCvc() {
         cvcError.shouldHave(Condition.exactText("Неверный формат"));
+        cvcError.waitUntil(Condition.visible,1500);
     }
 }
