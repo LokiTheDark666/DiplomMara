@@ -29,13 +29,13 @@ public class BuyPage {
     private SelenideElement cvcError = $x("//span[contains(text(),'CVC/CVV')]").parent().$(".input__sub");
 
     public void declinedMessage() {
-        messageFailure.shouldBe(Condition.visible);
-        messageDeclined.shouldBe(Condition.visible);
+        messageFailure.waitUntil(Condition.visible, 4500);
+        messageDeclined.waitUntil(Condition.visible, 4500);
     }
 
     public void approvedMessage() {
-        messageSuccess.shouldBe(Condition.visible);
-        messageApproved.shouldBe(Condition.visible);
+        messageSuccess.waitUntil(Condition.visible, 4500);
+        messageApproved.waitUntil(Condition.visible, 4500);
     }
 
     public void sendForm() {
@@ -43,7 +43,7 @@ public class BuyPage {
     }
 
     public void emptyFieldNumberCard() {
-        numberCardError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        numberCardError.shouldHave(Condition.exactText("Неверный формат"));
         numberCardError.waitUntil(Condition.visible, 1500);
     }
 
@@ -53,7 +53,7 @@ public class BuyPage {
     }
 
     public void emptyFieldMonth() {
-        monthError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        monthError.shouldHave(Condition.exactText("Неверный формат"));
         monthError.waitUntil(Condition.visible,1500);
     }
 
@@ -68,7 +68,7 @@ public class BuyPage {
     }
 
     public void emptyFieldYear() {
-        yearError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        yearError.shouldHave(Condition.exactText("Неверный формат"));
         yearError.waitUntil(Condition.visible,1500);
     }
 
@@ -98,7 +98,7 @@ public class BuyPage {
     }
 
     public void emptyFieldCvc() {
-        cvcError.shouldHave(Condition.exactText("Поле обязательно для заполнения"));
+        cvcError.shouldHave(Condition.exactText("Неверный формат"));
         cvcError.waitUntil(Condition.visible,1500);
     }
 

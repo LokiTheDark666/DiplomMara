@@ -2,11 +2,9 @@ package ru.netology.test;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
 import lombok.var;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataGenerator;
 import ru.netology.page.BuyPage;
@@ -17,19 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class serviceTestBuyPage {
 
-    private final TourPage tourPage = new TourPage();
-    private final BuyPage buyPage = new BuyPage();
+    private TourPage tourPage = new TourPage();
+    private BuyPage buyPage = new BuyPage();
+
 
     @BeforeAll
-    static void setUpAll() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
-    }
-
-    @BeforeEach
-    void setup() {
+    static void setup() {
         Configuration.holdBrowserOpen = true;
         open("http://localhost:8080");
     }
+
 
     @AfterAll
     static void tearDownAll() {
@@ -285,6 +280,7 @@ public class serviceTestBuyPage {
         buyPage.wrongFormatFieldCvc();
     }
 
+
     @Test
     void shouldFillFormWithSpaceInCvcField() {
         tourPage.toBuy();
@@ -292,6 +288,7 @@ public class serviceTestBuyPage {
         buyPage.sendForm();
         buyPage.emptyFieldCvc();
     }
+
 
     @Test
     void shouldFillFormWithoutCvcField() {
