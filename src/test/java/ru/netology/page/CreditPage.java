@@ -41,13 +41,13 @@ public class CreditPage {
     }
 
     public void declinedMessage() {
-        messageFailure.shouldBe(Condition.visible);
-        messageDeclined.shouldBe(Condition.visible);
+        messageFailure.waitUntil(Condition.visible, 15000);
+        messageDeclined.waitUntil(Condition.visible, 15000);
     }
 
     public void approvedMessage() {
-        messageSuccess.shouldBe(Condition.visible);
-        messageApproved.shouldBe(Condition.visible);
+        messageSuccess.waitUntil(Condition.visible, 15000);
+        messageApproved.waitUntil(Condition.visible, 15000);
     }
 
     public void emptyFieldNumberCard() {

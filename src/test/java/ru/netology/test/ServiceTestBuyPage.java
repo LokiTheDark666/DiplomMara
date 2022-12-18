@@ -2,9 +2,10 @@ package ru.netology.test;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import lombok.var;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataGenerator;
 import ru.netology.page.BuyPage;
@@ -13,28 +14,34 @@ import ru.netology.page.TourPage;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class serviceTestBuyPage {
+public class ServiceTestBuyPage {
 
-    private TourPage tourPage = new TourPage();
-    private BuyPage buyPage = new BuyPage();
+    private TourPage tourPage;
+    private BuyPage buyPage;
 
 
     @BeforeAll
-    static void setup() {
+    static void setupAll() {
         Configuration.holdBrowserOpen = true;
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+
+    @BeforeEach
+    void setup() {
         open("http://localhost:8080");
+        tourPage = new TourPage();
+        buyPage = tourPage.toBuy();
     }
 
 
     @AfterAll
     static void tearDownAll() {
         DataGenerator.cleanData();
-        SelenideLogger.removeListener("allure");
     }
 
     @Test
     void shouldTestApprovedCard() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getApprovedCard());
         buyPage.sendForm();
         buyPage.approvedMessage();
@@ -46,7 +53,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldTestDeclinedCard() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getDeclinedCard());
         buyPage.sendForm();
         buyPage.declinedMessage();
@@ -58,7 +65,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithLatinaInNumberCardField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getLatinaInFiledNumber());
         buyPage.sendForm();
         buyPage.wrongFormatFieldNumberCard();
@@ -66,7 +73,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSymbolInNumberCardField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSymbolInCardField());
         buyPage.sendForm();
         buyPage.wrongFormatFieldNumberCard();
@@ -74,7 +81,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSpaceInNumberCardField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSpaceInCardField());
         buyPage.sendForm();
         buyPage.emptyFieldNumberCard();
@@ -82,7 +89,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithoutFieldNumberCard() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEmptyCardField());
         buyPage.sendForm();
         buyPage.emptyFieldNumberCard();
@@ -90,7 +97,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithWrongMonth() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getWrongMonth());
         buyPage.sendForm();
         buyPage.wrongPeriodMonthField();
@@ -98,7 +105,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithZeroInMonthField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getZeroMonth());
         buyPage.sendForm();
         buyPage.wrongPeriodMonthField();
@@ -106,7 +113,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithLatinaInMonthField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getLatinaInFieldMonth());
         buyPage.sendForm();
         buyPage.wrongFormatFieldMonth();
@@ -114,7 +121,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSymbolInMonthField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSymbolInFieldMonth());
         buyPage.sendForm();
         buyPage.wrongFormatFieldMonth();
@@ -122,7 +129,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSpaceInMonthField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSpaceInFieldMonth());
         buyPage.sendForm();
         buyPage.emptyFieldMonth();
@@ -130,7 +137,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithoutMonthField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEmptyFieldMonth());
         buyPage.sendForm();
         buyPage.emptyFieldMonth();
@@ -138,7 +145,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithExpiredCardInMonth() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getExpiredMonth());
         buyPage.sendForm();
         buyPage.wrongPeriodMonthField();
@@ -146,7 +153,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithEarlierYear() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEarlyYear());
         buyPage.sendForm();
         buyPage.cardExpiredFieldYear();
@@ -154,7 +161,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithLaterYear() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getLaterYear());
         buyPage.sendForm();
         buyPage.wrongPeriodYearField();
@@ -162,7 +169,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithLatinaInYearField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getLatinaInFieldYear());
         buyPage.sendForm();
         buyPage.wrongFormatFieldYear();
@@ -170,7 +177,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSymbolInYearField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSymbolInFieldYear());
         buyPage.sendForm();
         buyPage.wrongFormatFieldYear();
@@ -178,7 +185,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSpaceInYearField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSpaceInFieldYear());
         buyPage.sendForm();
         buyPage.emptyFieldYear();
@@ -186,7 +193,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithoutYearField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEmptyFieldYear());
         buyPage.sendForm();
         buyPage.emptyFieldYear();
@@ -194,7 +201,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithDoubleSecondNameInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getDoubleSecondName());
         buyPage.sendForm();
         buyPage.approvedMessage();
@@ -202,7 +209,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithLowerCaseInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getLowerCaseName());
         buyPage.sendForm();
         buyPage.wrongFormatFieldOwner();
@@ -210,7 +217,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithNameConsistTwoLetter() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getNameConsistTwoLetter());
         buyPage.sendForm();
         buyPage.approvedMessage();
@@ -218,7 +225,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithCirilicUpperCaseInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getCirilicNameWithUpperCase());
         buyPage.sendForm();
         buyPage.wrongFormatFieldOwner();
@@ -226,7 +233,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithCirilicLowerCaseInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getCirilicNameWithLowerCase());
         buyPage.sendForm();
         buyPage.wrongFormatFieldOwner();
@@ -234,7 +241,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithNumbersInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getNumbersInFieldOwner());
         buyPage.sendForm();
         buyPage.wrongFormatFieldOwner();
@@ -242,7 +249,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSymbolInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSymbolInFieldOwner());
         buyPage.sendForm();
         buyPage.wrongFormatFieldOwner();
@@ -250,7 +257,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSpaceInNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSpaceInFieldOwner());
         buyPage.sendForm();
         buyPage.emptyFieldOwner();
@@ -258,7 +265,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithoutNameField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEmptyFieldOwner());
         buyPage.sendForm();
         buyPage.emptyFieldOwner();
@@ -266,7 +273,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSymbolInCvcField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSymbolInFieldCvc());
         buyPage.sendForm();
         buyPage.wrongFormatFieldCvc();
@@ -274,7 +281,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithLatinaInCvcField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getLatinaInFieldCvc());
         buyPage.sendForm();
         buyPage.wrongFormatFieldCvc();
@@ -283,7 +290,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithSpaceInCvcField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getSpaceInFieldCvc());
         buyPage.sendForm();
         buyPage.emptyFieldCvc();
@@ -292,7 +299,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldFillFormWithoutCvcField() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEmptyFieldCvc());
         buyPage.sendForm();
         buyPage.emptyFieldCvc();
@@ -300,7 +307,7 @@ public class serviceTestBuyPage {
 
     @Test
     void shouldNotFillFormFields() {
-        tourPage.toBuy();
+
         buyPage.fillFormBuy(DataGenerator.getEmptyFormFields());
         buyPage.sendForm();
         buyPage.emptyFieldNumberCard();

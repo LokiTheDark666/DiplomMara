@@ -2,8 +2,9 @@ package ru.netology.test;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import lombok.var;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.data.DataGenerator;
@@ -15,26 +16,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ServiceTestCreditPage {
 
-    private final TourPage tourPage = new TourPage();
-    private final CreditPage creditPage = new CreditPage();
+    private TourPage tourPage;
+    private CreditPage creditPage;
 
-
+    @BeforeAll
+    static void setupAll() {
+        Configuration.holdBrowserOpen = true;
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
 
     @BeforeEach
     void setup() {
-        Configuration.holdBrowserOpen = true;
         open("http://localhost:8080");
+        tourPage = new TourPage();
+        creditPage = tourPage.toCredit();
     }
 
     @AfterAll
     static void tearDownAll() {
         DataGenerator.cleanData();
-        SelenideLogger.removeListener("allure");
     }
 
     @Test
     void shouldTestApprovedCard() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getApprovedCard());
         creditPage.sendForm();
         creditPage.approvedMessage();
@@ -46,7 +51,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldTestDeclinedCard() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getDeclinedCard());
         creditPage.sendForm();
         creditPage.declinedMessage();
@@ -58,7 +63,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithLatinaInNumberCardField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getLatinaInFiledNumber());
         creditPage.sendForm();
         creditPage.wrongFormatFieldNumberCard();
@@ -66,7 +71,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSymbolInNumberCardField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSymbolInCardField());
         creditPage.sendForm();
         creditPage.wrongFormatFieldNumberCard();
@@ -74,7 +79,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSpaceInNumberCardField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSpaceInCardField());
         creditPage.sendForm();
         creditPage.emptyFieldNumberCard();
@@ -82,7 +87,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithoutFieldNumberCard() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEmptyCardField());
         creditPage.sendForm();
         creditPage.emptyFieldNumberCard();
@@ -90,7 +95,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithWrongMonth() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getWrongMonth());
         creditPage.sendForm();
         creditPage.wrongPeriodMonthField();
@@ -98,7 +103,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithZeroInMonthField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getZeroMonth());
         creditPage.sendForm();
         creditPage.wrongPeriodMonthField();
@@ -106,7 +111,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithLatinaInMonthField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getLatinaInFieldMonth());
         creditPage.sendForm();
         creditPage.wrongFormatFieldMonth();
@@ -114,7 +119,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSymbolInMonthField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSymbolInFieldMonth());
         creditPage.sendForm();
         creditPage.wrongFormatFieldMonth();
@@ -122,7 +127,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSpaceInMonthField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSpaceInFieldMonth());
         creditPage.sendForm();
         creditPage.emptyFieldMonth();
@@ -130,7 +135,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithoutMonthField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEmptyFieldMonth());
         creditPage.sendForm();
         creditPage.emptyFieldMonth();
@@ -138,7 +143,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithExpiredCardInMonth() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getExpiredMonth());
         creditPage.sendForm();
         creditPage.wrongPeriodMonthField();
@@ -146,7 +151,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithEarlierYear() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEarlyYear());
         creditPage.sendForm();
         creditPage.cardExpiredFieldYear();
@@ -154,7 +159,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithLaterYear() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getLaterYear());
         creditPage.sendForm();
         creditPage.wrongPeriodYearField();
@@ -162,7 +167,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithLatinaInYearField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getLatinaInFieldYear());
         creditPage.sendForm();
         creditPage.wrongFormatFieldYear();
@@ -170,7 +175,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSymbolInYearField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSymbolInFieldYear());
         creditPage.sendForm();
         creditPage.wrongFormatFieldYear();
@@ -178,7 +183,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSpaceInYearField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSpaceInFieldYear());
         creditPage.sendForm();
         creditPage.emptyFieldYear();
@@ -186,7 +191,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithoutYearField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEmptyFieldYear());
         creditPage.sendForm();
         creditPage.emptyFieldYear();
@@ -194,7 +199,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithDoubleSecondNameInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getDoubleSecondName());
         creditPage.sendForm();
         creditPage.approvedMessage();
@@ -202,7 +207,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithLowerCaseInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getLowerCaseName());
         creditPage.sendForm();
         creditPage.wrongFormatFieldOwner();
@@ -210,7 +215,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithNameConsistTwoLetter() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getNameConsistTwoLetter());
         creditPage.sendForm();
         creditPage.approvedMessage();
@@ -218,7 +223,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithCirilicUpperCaseInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getCirilicNameWithUpperCase());
         creditPage.sendForm();
         creditPage.wrongFormatFieldOwner();
@@ -226,7 +231,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithCirilicLowerCaseInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getCirilicNameWithLowerCase());
         creditPage.sendForm();
         creditPage.wrongFormatFieldOwner();
@@ -234,7 +239,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithNumbersInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getNumbersInFieldOwner());
         creditPage.sendForm();
         creditPage.wrongFormatFieldOwner();
@@ -242,7 +247,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSymbolInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSymbolInFieldOwner());
         creditPage.sendForm();
         creditPage.wrongFormatFieldOwner();
@@ -250,7 +255,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSpaceInNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSpaceInFieldOwner());
         creditPage.sendForm();
         creditPage.emptyFieldOwner();
@@ -258,7 +263,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithoutNameField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEmptyFieldOwner());
         creditPage.sendForm();
         creditPage.emptyFieldOwner();
@@ -266,7 +271,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSymbolInCvcField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSymbolInFieldCvc());
         creditPage.sendForm();
         creditPage.wrongFormatFieldCvc();
@@ -274,7 +279,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithLatinaInCvcField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getLatinaInFieldCvc());
         creditPage.sendForm();
         creditPage.wrongFormatFieldCvc();
@@ -282,7 +287,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithSpaceInCvcField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getSpaceInFieldCvc());
         creditPage.sendForm();
         creditPage.emptyFieldCvc();
@@ -290,7 +295,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldFillFormWithoutCvcField() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEmptyFieldCvc());
         creditPage.sendForm();
         creditPage.emptyFieldCvc();
@@ -298,7 +303,7 @@ public class ServiceTestCreditPage {
 
     @Test
     void shouldNotFillFormFields() {
-        tourPage.toCredit();
+
         creditPage.fillFormCredit(DataGenerator.getEmptyFormFields());
         creditPage.sendForm();
         creditPage.emptyFieldNumberCard();

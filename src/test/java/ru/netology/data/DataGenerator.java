@@ -1,11 +1,9 @@
 package ru.netology.data;
 
 import com.github.javafaker.Faker;
-import com.mysql.cj.jdbc.Driver;
 import lombok.SneakyThrows;
 import lombok.Value;
 import lombok.val;
-import lombok.var;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -232,20 +230,7 @@ public class DataGenerator {
 
     public static Connection getConnection() {
         try {
-            Driver driver = new com.mysql.cj.jdbc.Driver();
-            DriverManager.registerDriver(driver);
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            //Class.forName("com.postgresql.cj.jdbc.Driver"); Для использования драйвера postgresql
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/app", "app", "pass"
-            ); // Соответственно используем этот "jdbc:postgresql://localhost:5432/app" url для использования postgresql БД
+            connection = DriverManager.getConnection(System.getProperty("db.url"), "app", "pass");
         } catch (SQLException e) {
             e.printStackTrace();
         }
